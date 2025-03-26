@@ -40,22 +40,75 @@ class Tree {
         return root;
     }
 
-    insert(root = this.root, value) {
+    _insertRecursive(root, value) {
         if (root === null) {
             return new Node(value);
         }
 
-        if (root.data > value) {
-            
+        if (root.data === value) {
+            return root;
         }
+
+        if (value < root.data) {
+            root.left = this._insertRecursive(root.left, value);
+        } else if (value > root.data) {
+            root.right = this._insertRecursive(root.right, value);
+        }
+
+        return root;
+    }
+
+    insert(value) {
+        this.root = this._insertRecursive(this.root, value);
+    }
+
+    _getSuccessor(curr) {
+        curr = curr.right;
+        while (curr !== null && curr.left !== null) {
+            curr = curr.left;
+        }
+        return curr;
+    }
+
+    _deleteRecursive(root, value) {
+        if (root === null) {
+            return root;
+        }
+
+        if (root.data > value) {
+            root.left = this._deleteRecursive(root.left, value);
+        } else if (root.data < value) {
+            root.right = this._deleteRecursive(root.right, value);
+        } else {
+            // only right child
+            if (root.left === null) {
+                return root.right;
+            }
+
+            // only left child
+            if (root.right === null) {
+                return root.left;
+            }
+
+            // both children
+            let successor = this._getSuccessor(root);
+            root.value = successor.value;
+            root.right = this._deleteRecursive(root.right, successor.key);
+        }
+
+        return root;
     }
 
     deleteItem(value) {
-        let currNode = this.root;
+        this.root = this._deleteRecursive(this.root, value);
+    }
 
+    find(value) {
 
     }
 }
 
 let tree = new Tree([1, 3, 2, 4]);
+tree.insert(7);
+tree.deleteItem(4);
 tree.prettyPrint();
