@@ -1,6 +1,6 @@
 class Node {
-    constructor(root, left = null, right = null) {
-        this.root = root;
+    constructor(data, left = null, right = null) {
+        this.data = data;
         this.left = left;
         this.right = right;
     }
@@ -14,14 +14,14 @@ class Tree {
         this.root = this._buildTree(this.array, 0, this.array.length - 1);
     }
 
-    prettyPrint(node, prefix = "", isLeft = true) {
+    prettyPrint(node = this.root, prefix = "", isLeft = true) {
         if (node === null) {
             return;
         }
         if (node.right !== null) {
             this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
         }
-        console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.root}`);
+        console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
         if (node.left !== null) {
             this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
         }
@@ -40,8 +40,22 @@ class Tree {
         return root;
     }
 
+    insert(root = this.root, value) {
+        if (root === null) {
+            return new Node(value);
+        }
 
+        if (root.data > value) {
+            
+        }
+    }
+
+    deleteItem(value) {
+        let currNode = this.root;
+
+
+    }
 }
 
 let tree = new Tree([1, 3, 2, 4]);
-tree.prettyPrint(tree.root);
+tree.prettyPrint();
