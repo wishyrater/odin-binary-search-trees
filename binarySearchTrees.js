@@ -103,12 +103,25 @@ class Tree {
         this.root = this._deleteRecursive(this.root, value);
     }
 
+    _findRecursive(root, value) {
+        if (root === null) {
+            return null;
+        } else if (root.data < value) {
+            return this._findRecursive(root.right, value);
+        } else if (root.data > value) {
+            return this._findRecursive(root.left, value);
+        } else if (root.data === value) {
+            return root;
+        }
+    }
+
     find(value) {
-        
+        return this._findRecursive(this.root, value);
     }
 }
 
 let tree = new Tree([1, 3, 2, 4]);
 tree.insert(7);
 tree.deleteItem(4);
+console.log(tree.find(3));
 tree.prettyPrint();
