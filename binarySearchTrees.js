@@ -221,3 +221,30 @@ class Tree {
     }
 }
 
+let array = [];
+for (let i = 0; i < 20; i++) {
+    const randomNumber = Math.floor(Math.random() * 100);
+    array.push(randomNumber);
+}
+
+let tree = new Tree(array);
+tree.prettyPrint();
+console.log(tree.isBalanced());
+tree.inOrder(function print(node) {
+    console.log(node.data);
+});
+tree.preOrder(function print(node) {
+    console.log(node.data);
+});
+tree.postOrder(function print(node) {
+    console.log(node.data);
+});
+
+tree.insert(101);
+tree.insert(110);
+tree.insert(120);
+tree.insert(132);
+console.log(tree.isBalanced());
+tree.rebalance();
+tree.isBalanced();
+tree.prettyPrint();
