@@ -118,10 +118,21 @@ class Tree {
     find(value) {
         return this._findRecursive(this.root, value);
     }
+
+    levelOrder(callback) {
+        if (typeof callback !== 'function') throw Error('Callback must be instance of function');
+        if (this.root === null) return;
+
+        const queue = [this.root];
+        while (queue.length !== 0) {
+            const curr = queue.at(0);
+            callback(curr);
+            if (curr.left !== null) queue.push(curr.left);
+            if (curr.right !== null) queue.push(curr.right);
+            queue.shift();
+        }
+    }
 }
 
 let tree = new Tree([1, 3, 2, 4]);
-tree.insert(7);
-tree.deleteItem(4);
-console.log(tree.find(3));
 tree.prettyPrint();
